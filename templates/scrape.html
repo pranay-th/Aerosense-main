@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data Scraping</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Scrape Weather Data</h1>
+    <form action="/scrape" method="GET">
+        <input type="submit" value="Scrape Weather Data">
+    </form>
+
+    {% if message and data %}
+    <h2>{{ message }}</h2>
+    <ul>
+        <li>Day: {{ data[0] }}</li>
+        <li>Month: {{ data[1] }}</li>
+        <li>Year: {{ data[2] }}</li>
+        <li>Mean Temp: {{ data[3] }}</li>
+        <li>Max Temp: {{ data[4] }}</li>
+        <li>Min Temp: {{ data[5] }}</li>
+        <li>Humidity: {{ data[6] }}</li>
+        <li>Dew Point: {{ data[7] }}</li>
+        <li>Pressure: {{ data[8] }}</li>
+        <li>Heat: {{ data[9] }}</li>
+        <li>Wet: {{ data[10] }}</li>
+    </ul>
+    {% endif %}
+</body>
+</html>

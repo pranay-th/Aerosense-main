@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aircraft Damage Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/damage_detection.css') }}">
+    <style>
+        /* Add a modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #e67e22;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .input-group {
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .input-group input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input[type="file"]:focus {
+            border-color: #e67e22;
+        }
+
+        button {
+            background-color: #e67e22;
+            color: #fff;
+            font-size: 18px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d35400;
+        }
+
+        .result-section {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0f4f8;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .result-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .result-section ul li {
+            font-size: 16px;
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border-left: 5px solid #e67e22;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Add responsive behavior */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .result-section ul li {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aircraft Damage Detection</h1>
+        <form action="/damage-detection" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="image">Upload an Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <button type="submit">Detect Damage</button>
+        </form>
+
+        <div class="result-section">
+            <h2>Detection Result:</h2>
+            {% if result %}
+                <p>Image Dimensions: {{ result['image_dimensions'] }}</p>
+                <ul>
+                    {% for prediction in result['description'] %}
+                        <li>{{ prediction }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No damage detected. Please upload another image.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

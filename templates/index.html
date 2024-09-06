@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
+<script src="https://mediafiles.botpress.cloud/f04c53cc-e7aa-4061-b969-b707620a8f06/webchat/v2.1/config.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerosense - AI Solutions for Aviation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        header {
+            background: #283593;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        nav .nav-links li {
+            margin-left: 20px;
+        }
+
+        nav .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav .nav-links li a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            padding: 100px 50px;
+            text-align: center;
+            background: url('static/images/hero-bg.jpg') no-repeat center center/cover;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 24px;
+        }
+
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #283593;
+        }
+
+        section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        form input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #283593;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #3949ab;
+        }
+
+        .detection-result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #283593;
+            padding: 40px 0;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer .footer-links {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        footer .footer-links li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        footer .footer-links li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer .footer-links li a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Airplane AI</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention</a></li>
+                <li><a href="{{ url_for('damage_detection') }}">Damage Detection</a></li>
+                <li><a href="{{ url_for('object_detection') }}">Object Detection</a></li>
+                <li><a href="{{ url_for('predict') }}">Weather Forecast</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>Welcome to Airplane AI Solutions</h1>
+            <p>Innovative AI Models for Safe and Efficient Aviation</p>
+        </div>
+    </header>
+
+    <section class="services">
+        <h2>Our Services</h2>
+        <p>Explore the range of AI-powered solutions we offer for the aviation industry.</p>
+        <div class="service-grid">
+            <div class="service-item">
+                <h3>Damage Detection</h3>
+                <p>Use our AI models to detect and prevent aircraft damage.</p>
+            </div>
+            <div class="service-item">
+                <h3>Object Detection</h3>
+                <p>Our AI models ensure safe runway operations with object detection.</p>
+            </div>
+            <div class="service-item">
+                <h3>Weather Forecasting</h3>
+                <p>Advanced AI for predicting weather conditions and ensuring safe flights.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>&copy; 2024 Airplane AI Solutions. All rights reserved.</p>
+    </footer>
+</body>
+</html>

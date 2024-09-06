@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Add a modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e67e22;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: grid;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], 
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, 
+        input[type="number"]:focus {
+            border-color: #e67e22;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #e67e22;
+            color: #fff;
+            font-size: 18px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #d35400;
+        }
+
+        .result-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .result-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-section p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .result-section .prediction-result {
+            font-weight: bold;
+            color: #e67e22;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                padding: 20px;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Predict Weather Conditions</h1>
+    
+    <form action="/predict" method="POST">
+        <fieldset>
+            <legend>Date</legend>
+            <label for="day">Day:</label>
+            <input type="number" id="day" name="day" required>
+            
+            <label for="month">Month:</label>
+            <input type="number" id="month" name="month" required>
+            
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" required>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Weather Variables</legend>
+            <label for="max_temp">Max Temperature:</label>
+            <input type="text" id="max_temp" name="max_temp" required>
+
+            <label for="min_temp">Min Temperature:</label>
+            <input type="text" id="min_temp" name="min_temp" required>
+
+            <label for="meandew">Mean Dew Point:</label>
+            <input type="text" id="meandew" name="meandew" required>
+
+            <label for="meanhum">Mean Humidity:</label>
+            <input type="text" id="meanhum" name="meanhum" required>
+
+            <label for="pressure">Pressure:</label>
+            <input type="text" id="pressure" name="pressure" required>
+
+            <label for="meancloud">Mean Cloud:</label>
+            <input type="text" id="meancloud" name="meancloud" required>
+
+            <label for="rainfall">Rainfall:</label>
+            <input type="text" id="rainfall" name="rainfall" required>
+
+            <label for="population">Population:</label>
+            <input type="text" id="population" name="population" required>
+
+            <label for="sunshine">Sunshine Hour:</label>
+            <input type="text" id="sunshine" name="sunshine" required>
+
+            <label for="wind_direction">Wind Direction:</label>
+            <input type="text" id="wind_direction" name="wind_direction" required>
+
+            <label for="wind_speed">Wind Speed:</label>
+            <input type="text" id="wind_speed" name="wind_speed" required>
+
+            <label for="air_quality">Air Quality:</label>
+            <input type="text" id="air_quality" name="air_quality" required>
+        </fieldset>
+
+        <input type="submit" value="Predict Weather">
+    </form>
+
+    {% if heat and wet %}
+    <div class="result-section">
+        <h2>Prediction Results:</h2>
+        <p class="prediction-result">Heat Status: {{ heat }}</p>
+        <p class="prediction-result">Wet Status: {{ wet }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
