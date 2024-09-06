@@ -4,69 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/weather_detection.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label {
+            font-weight: 600;
+        }
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #weather {
+            margin-top: 20px;
+        }
+        #weather div {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        #weather img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Weather Forecast Prediction</h1>
-        <form id="weatherForm">
-            <label for="day">Day:</label>
-            <input type="number" id="day" name="day" required>
-
-            <label for="month">Month:</label>
-            <input type="number" id="month" name="month" required>
-
-            <label for="year">Year:</label>
-            <input type="number" id="year" name="year" required>
-
-            <button type="submit">Predict</button>
+        <h1>Weather Forecast</h1>
+        <form id="weather-form">
+            <label for="location">Enter location:</label>
+            <input type="text" id="location" name="location" placeholder="e.g., London" required>
+            <label for="days">Number of days:</label>
+            <input type="number" id="days" name="days" value="3" min="1" max="10">
+            <button type="submit">Get Forecast</button>
         </form>
-
-        <button id="scrapeButton">Scrape Latest Weather Data</button>
-
-        <div id="result">
-            <h3>Prediction Results</h3>
-            <p>Heat: <span id="heat"></span></p>
-            <p>Wet: <span id="wet"></span></p>
-        </div>
+        
+        <div id="weather"></div>
     </div>
 
     <script>
-        document.getElementById('weatherForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.getElementById('weather-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const location = document.getElementById('location').value;
+            const days = document.getElementById('days').value;
+            const url = `/weather?location=${encodeURIComponent(location)}&days=${encodeURIComponent(days)}`;
 
-            let day = document.getElementById('day').value;
-            let month = document.getElementById('month').value;
-            let year = document.getElementById('year').value;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('weather').innerHTML = `<p>${data.error}</p>`;
+                        return;
+                    }
 
-            fetch('/predict', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    day: day,
-                    month: month,
-                    year: year
+                    const forecast = data.forecast.forecastday;
+                    let html = `<h2>Weather Forecast for ${data.location.name}</h2>`;
+                    
+                    forecast.forEach(day => {
+                        html += `
+                            <div>
+                                <h3>${day.date}</h3>
+                                <p>Condition: ${day.day.condition.text}</p>
+                                <p>Temperature: ${day.day.avgtemp_c}°C</p>
+                                <p>Humidity: ${day.day.avghumidity}%</p>
+                                <p>Wind: ${day.day.maxwind_kph} kph</p>
+                                <img src="${day.day.condition.icon}" alt="${day.day.condition.text}">
+                            </div>
+                        `;
+                    });
+                    
+                    document.getElementById('weather').innerHTML = html;
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('heat').textContent = data.heat;
-                document.getElementById('wet').textContent = data.wet;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        // Scrape weather data button
-        document.getElementById('scrapeButton').addEventListener('click', function() {
-            fetch('/scrape')
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                console.log(data.data);
-            })
-            .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    document.getElementById('weather').innerHTML = '<p>Sorry, there was an error retrieving the weather data.</p>';
+                });
         });
     </script>
 </body>
