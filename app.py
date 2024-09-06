@@ -208,31 +208,29 @@ def detect_objects():
     # Render the result in the HTML template
     return render_template('object_detection.html', result=detection_result)
 
+WEATHER_API_KEY = '246922dfbe0a4b119b2105043240609'  # Replace with your WeatherAPI key
+WEATHER_API_BASE_URL = 'http://api.weatherapi.com/v1/'
 
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    if request.method == 'POST':
-        if 'day' in request.form:
-            # Handle the first prediction model
-            day = int(request.form['day'])
-            month = int(request.form['month'])
-            year = int(request.form['year']) - 1999
+@app.route('/weather')
+def weather_detect():
+    return render_template('weather_prediction.html')
 
-            heat_pred = classifier.predict([[day, month, year]])
-            wet_pred = classifier_z.predict([[day, month, year]])
+@app.route('/weather', methods=['GET'])
+def weather():
+    location = request.args.get('location')
+    days = request.args.get('days', 3)
 
-            heat_status = "YES" if (heat_pred[0]) == 1 else "NO"
-            wet_status = "YES" if (wet_pred[0]) == 1 else "NO"
+    if not location:
+        return jsonify({'error': 'Location parameter is required'}), 400
 
-            return jsonify({'heat': heat_status, 'wet': wet_status})
+    url = f"{WEATHER_API_BASE_URL}forecast.json?key={WEATHER_API_KEY}&q={location}&days={days}"
 
-    return render_template('predict.html')
-
-@app.route('/scrape', methods=['GET'])
-def scrape_weather():
-    # Call the weather scraping function
-    weather_data = save_weather_to_csv()
-    return jsonify({'message': 'Weather data scraped and saved successfully!', 'data': weather_data})
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return jsonify(response.json())
+    except requests.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0',port=5000)
