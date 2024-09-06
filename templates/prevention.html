@@ -10,13 +10,82 @@
     <div class="container">
         <h1>Predictive Maintenance for Aircraft Engines</h1>
         <form action="/predict" method="post">
-            <!-- Creating 14 input fields for 14 features -->
-            {% for i in range(1, 15) %}
+            <!-- Input fields with explanations for each feature -->
             <div class="input-group">
-                <label for="feature{{ i }}">Feature {{ i }}:</label>
-                <input type="text" id="feature{{ i }}" name="feature{{ i }}" required>
+                <label for="time_in_cycles">Time in Cycles:</label>
+                <input type="text" id="time_in_cycles" name="time_in_cycles" required>
+                <small>Number of operational cycles since last maintenance.</small>
             </div>
-            {% endfor %}
+            <div class="input-group">
+                <label for="T24">T24 (Total Temperature at LPC Outlet):</label>
+                <input type="text" id="T24" name="T24" required>
+                <small>Temperature after the Low-Pressure Compressor (LPC).</small>
+            </div>
+            <div class="input-group">
+                <label for="T30">T30 (Total Temperature at HPC Outlet):</label>
+                <input type="text" id="T30" name="T30" required>
+                <small>Temperature after the High-Pressure Compressor (HPC).</small>
+            </div>
+            <div class="input-group">
+                <label for="T50">T50 (Total Temperature at LPT Outlet):</label>
+                <input type="text" id="T50" name="T50" required>
+                <small>Temperature after the Low-Pressure Turbine (LPT).</small>
+            </div>
+            <div class="input-group">
+                <label for="P30">P30 (Total Pressure at HPC Outlet):</label>
+                <input type="text" id="P30" name="P30" required>
+                <small>Pressure after the High-Pressure Compressor (HPC).</small>
+            </div>
+            <div class="input-group">
+                <label for="Nf">Nf (Fan Speed):</label>
+                <input type="text" id="Nf" name="Nf" required>
+                <small>Rotational speed of the fan section of the engine.</small>
+            </div>
+            <div class="input-group">
+                <label for="Nc">Nc (Core Speed):</label>
+                <input type="text" id="Nc" name="Nc" required>
+                <small>Rotational speed of the core engine components.</small>
+            </div>
+            <div class="input-group">
+                <label for="Ps30">Ps30 (Static Pressure at HPC Outlet):</label>
+                <input type="text" id="Ps30" name="Ps30" required>
+                <small>Static pressure after the High-Pressure Compressor (HPC).</small>
+            </div>
+            <div class="input-group">
+                <label for="phi">phi (Fuel-Air Ratio):</label>
+                <input type="text" id="phi" name="phi" required>
+                <small>Ratio of fuel to air in the combustion process.</small>
+            </div>
+            <div class="input-group">
+                <label for="NRf">NRf (Corrected Fan Speed):</label>
+                <input type="text" id="NRf" name="NRf" required>
+                <small>Normalized fan speed based on ambient conditions.</small>
+            </div>
+            <div class="input-group">
+                <label for="BPR">BPR (Bypass Ratio):</label>
+                <input type="text" id="BPR" name="BPR" required>
+                <small>Ratio of bypassed air to core air in the engine.</small>
+            </div>
+            <div class="input-group">
+                <label for="htBleed">htBleed (Bleed Enthalpy):</label>
+                <input type="text" id="htBleed" name="htBleed" required>
+                <small>Energy extracted from the air for engine cooling or other purposes.</small>
+            </div>
+            <div class="input-group">
+                <label for="W31">W31 (HPT Coolant Bleed):</label>
+                <input type="text" id="W31" name="W31" required>
+                <small>Amount of air bled from the High-Pressure Turbine (HPT) for cooling.</small>
+            </div>
+            <div class="input-group">
+                <label for="W32">W32 (LPT Coolant Bleed):</label>
+                <input type="text" id="W32" name="W32" required>
+                <small>Amount of air bled from the Low-Pressure Turbine (LPT) for cooling.</small>
+            </div>
+            <div class="input-group">
+                <label for="RUL">Remaining Useful Life (RUL):</label>
+                <input type="text" id="RUL" name="RUL" required>
+                <small>Predicted number of cycles remaining before maintenance is required.</small>
+            </div>
             <button type="submit">Predict</button>
         </form>
         <div class="prediction">
